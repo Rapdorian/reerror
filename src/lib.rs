@@ -22,6 +22,8 @@ use std::{
 };
 
 use conversions::*;
+
+#[cfg(feature = "wgpu")]
 use wgpu::{RequestDeviceError, SurfaceError};
 
 /// propogate with throw! macro
@@ -368,6 +370,7 @@ impl From<ParseFloatError> for Error {
     }
 }
 
+#[cfg(feature = "image")]
 impl From<image::ImageError> for Error {
     fn from(e: image::ImageError) -> Self {
         use image::ImageError;
@@ -382,6 +385,7 @@ impl From<image::ImageError> for Error {
     }
 }
 
+#[cfg(feature = "wgpu")]
 impl From<SurfaceError> for Error {
     fn from(e: SurfaceError) -> Self {
         let kind = match e {
@@ -394,6 +398,7 @@ impl From<SurfaceError> for Error {
     }
 }
 
+#[cfg(feature = "wgpu")]
 impl From<RequestDeviceError> for Error {
     fn from(e: RequestDeviceError) -> Self {
         internal(e)
